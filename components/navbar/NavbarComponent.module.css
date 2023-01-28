@@ -1,0 +1,23 @@
+.main {
+    padding: 40px 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav_items {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav_item {
+    margin-left: 20px;
+    background: none;
+    padding: 5px;
+}
+
+.nav_item:hover {
+    background: none;
+}
