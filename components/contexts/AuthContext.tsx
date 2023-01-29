@@ -9,6 +9,7 @@ import PocketBase, { Admin, Record } from "pocketbase";
 import Spinner from "react-spinners/ClipLoader";
 
 import Navbar from "../navbar/NavbarComponent";
+import { useRouter } from "next/router";
 
 type Props = {
     children: React.ReactNode;
@@ -35,10 +36,31 @@ const AuthContextProvider: React.FunctionComponent<Props> = ({ children }) => {
     const pb = useMemo(() => new PocketBase("http://127.0.0.1:8090"), []);
 
     const [loading, setLoading] = useState<boolean>(true);
+    const router = useRouter();
 
     const [auth, setAuth] = useState<AuthData>({
         isAuthenticated: false,
     });
+
+    const hasProfileData = () => {
+        if (!auth.data) return true;
+
+        if (!auth.data.resume) return false;
+        if (!auth.data.experience) return false;
+        if (!auth.data.visa_type) return false;
+        if (!auth.data.industry) return false;
+        if (!auth.data.skills) return false;
+
+        return true;
+    };
+
+    useEffect(() => {
+        if (router.route === "/edit-profile" || hasProfileData()) return;
+
+        router.push({
+            pathname: "/edit-profile",
+        });
+    }, [auth]);
 
     useEffect(() => {
         setLoading(true);

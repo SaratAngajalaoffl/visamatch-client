@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import { useAuthContext } from "../contexts/AuthContext";
 
@@ -5,6 +6,8 @@ import classes from "./NavbarComponent.module.css";
 
 const Navbar: React.FunctionComponent = () => {
     const { pb, auth } = useAuthContext();
+
+    const router = useRouter();
 
     const employeeSignup = useCallback(async () => {
         const { authProviders } = await pb
@@ -22,6 +25,9 @@ const Navbar: React.FunctionComponent = () => {
 
     const handleLogout = async () => {
         pb.authStore.clear();
+        router.push({
+            pathname: "/",
+        });
     };
 
     return (
